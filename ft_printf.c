@@ -35,11 +35,12 @@ int	ft_printf(const char *format, ...)
         }
         format++;
     }
+    return count;
 }
 
-int main()
-{
-    int count = ft_printf("Hello %s, %d, %c, %f\n", "world", 42, 'a', 3.14);
-    printf("count = %d\n", count);
-    return 0;
-}
+// int main()
+// {
+//     int count = ft_printf("Hello %s, %d, %c, %f\n", "world", 42, 'a', 3.14);
+//     printf("count = %d\n", count);
+//     return 0;
+// }
