@@ -1,6 +1,39 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
 
+	if (!s)
+	{
+		return ;
+	}
+	i = 0;
+	while (s[i])
+		i++;
+	write(fd, s, i);
+}
+void	ft_putnbr_fd(int nb, int fd)
+{
+	long int	num;
+
+	num = nb;
+	if (num < 0)
+	{
+		ft_putchar_fd('-', fd);
+		num = -num;
+	}
+	if (num >= 10)
+	{
+		ft_putnbr_fd(num / 10, fd);
+	}
+	ft_putchar_fd((num % 10) + '0', fd);
+}
 int	ft_printf(const char *format, ...)
 {
     va_list args;
@@ -14,33 +47,42 @@ int	ft_printf(const char *format, ...)
             if (*format == 's')
             {
                 char *str = va_arg(args, char *);
-                printf("string: %s\n", str);
+                ft_putstr_fd(str, 1);
             }
-            else if (*format == 'd')
+            else if (*format == 'd' || *format == 'i')
             {
                 int num = va_arg(args, int);
-                printf("int: %d\n", num);
+                ft_putnbr_fd(num, 1);
             }
             else if (*format == 'c')
             {
                 char c = va_arg(args, int);
-                printf("char: %c\n", c);
+                ft_putchar_fd(c, 1);
             }
             else if (*format == 'f')
             {
                 double d = va_arg(args, double);
-                printf("double: %f\n", d);
+                printf("%f", d);
+            }
+            else
+            {
+                ft_putchar_fd(*format, 1);
             }
             count++;
         }
+        else if (*format != '%')
+        {
+            ft_putchar_fd(*format, 1);
+        }
         format++;
     }
+    va_end(args);
     return count;
 }
 
-// int main()
-// {
-//     int count = ft_printf("Hello %s, %d, %c, %f\n", "world", 42, 'a', 3.14);
-//     printf("count = %d\n", count);
-//     return 0;
-// }
+int main()
+{
+    ft_printf("ft_printf = Hello %s, %d, %c\n", "world", 42, 'a');
+    // printf("\nprintf = Hello %s, %d, %c, %f, \n", "world", 42, 'a', 3.14);
+    return 0;
+}
