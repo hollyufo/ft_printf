@@ -1,151 +1,121 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
-void	ft_putstr_fd(char *s, int fd)
-{
-	size_t	i;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/23 12:46:42 by imchaibi          #+#    #+#             */
+/*   Updated: 2024/11/23 13:33:46 by imchaibi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	if (!s)
-	{
-        write(fd, "(null)", 6);
-		return ;
-	}
-	i = 0;
-	while (s[i])
-		i++;
-	write(fd, s, i);
-}
-void	ft_putnbr_fd(int nb, int fd)
-{
-	long int	num;
+#include "ft_printf.h"
 
-	num = nb;
-	if (num < 0)
-	{
-		ft_putchar_fd('-', fd);
-		num = -num;
-	}
-	if (num >= 10)
-	{
-		ft_putnbr_fd(num / 10, fd);
-	}
-	ft_putchar_fd((num % 10) + '0', fd);
-}
-void	ft_puthex_fd(unsigned long num, int fd)
+static	void	ft_handle_format(const char *format, va_list args, int fd)
 {
-	char	*hex = "0123456789abcdef";
-
-	if (num >= 16)
-		ft_puthex_fd(num / 16, fd);
-	ft_putchar_fd(hex[num % 16], fd);
-}
-void	ft_putptr_fd(void *ptr, int fd)
-{
-	unsigned long	address;
-
-	address = (unsigned long)ptr;
-	ft_putstr_fd("0x", fd);
-	ft_puthex_fd(address, fd); // Pass the cast address
-}
-void	ft_putnbr_unsigned_fd(unsigned int nb, int fd)
-{
-	if (nb >= 10)
-	{
-		ft_putnbr_unsigned_fd(nb / 10, fd);
-	}
-	ft_putchar_fd((nb % 10) + '0', fd);
-}
-void	ft_puthex_lower_fd(unsigned int num, int fd)
-{
-	char	*hex = "0123456789abcdef";
-
-	if (num >= 16)
-		ft_puthex_lower_fd(num / 16, fd);
-	ft_putchar_fd(hex[num % 16], fd);
-}
-void	ft_puthex_upper_fd(unsigned int num, int fd)
-{
-	char	*hex = "0123456789ABCDEF";
-
-	if (num >= 16)
-		ft_puthex_upper_fd(num / 16, fd);
-	ft_putchar_fd(hex[num % 16], fd);
+	if (*format == 's')
+		ft_putstr_fd(va_arg(args, char *), fd);
+	else if (*format == 'd' || *format == 'i')
+		ft_putnbr_fd(va_arg(args, int), fd);
+	else if (*format == 'c')
+		ft_putchar_fd(va_arg(args, int), fd);
+	else if (*format == 'f')
+		ft_putfloat_fd(va_arg(args, double), fd, 6);
+	else if (*format == 'p')
+		ft_putptr_fd(va_arg(args, void *), fd);
+	else if (*format == 'u')
+		ft_putnbr_unsigned_fd(va_arg(args, unsigned int), fd);
+	else if (*format == 'x')
+		ft_puthex_lower_fd(va_arg(args, unsigned int), fd);
+	else if (*format == 'X')
+		ft_puthex_upper_fd(va_arg(args, unsigned int), fd);
+	else
+		ft_putchar_fd(*format, fd);
 }
 int	ft_printf(const char *format, ...)
 {
-    va_list args;
-    va_start(args, format);
-    int count = 0;
-    while (*format)
-    {
-        if (*format == '%')
-        {
-            format++;
-            if (*format == 's')
-            {
-                char *str = va_arg(args, char *);
-                ft_putstr_fd(str, 1);
-            }
-            else if (*format == 'd' || *format == 'i')
-            {
-                int num = va_arg(args, int);
-                ft_putnbr_fd(num, 1);
-            }
-            else if (*format == 'c')
-            {
-                char c = va_arg(args, int);
-                ft_putchar_fd(c, 1);
-            }
-            else if (*format == 'f')
-            {
-                double d = va_arg(args, double);
-                printf("%f", d);
-            }
-            else if (*format == 'p')
-            {
-                void *ptr = va_arg(args, void *);
-                ft_putptr_fd(ptr, 1);
-            }
-            else if (*format == 'u')
-            {
-                unsigned int num = va_arg(args, double);
-                ft_putnbr_unsigned_fd(num, 1);
-            }
-             else if (*format == 'x')
-            {
-                unsigned int num = va_arg(args, unsigned int);
-                ft_puthex_lower_fd(num, 1);
-            }
-            else if (*format == 'X')
-            {
-                unsigned int num = va_arg(args, unsigned int);
-                ft_puthex_upper_fd(num, 1);
-            }
-            else
-            {
-                ft_putchar_fd(*format, 1);
-            }
-            count++;
-        }
-        else if (*format != '%')
-        {
-            ft_putchar_fd(*format, 1);
-        }
-        format++;
-    }
-    va_end(args);
-    return count;
+	va_list	args;
+	int		count;
+
+	va_start(args, format);
+	count = 0;
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			ft_handle_format(format, args, 1);
+			count++;
+		}
+		else
+			ft_putchar_fd(*format, 1);
+		format++;
+	}
+	va_end(args);
+	return (count);
 }
 
-int main()
+int main(void)
 {
-    unsigned int num = 3735928559; // Example number (0xDEADBEEF)
-    ft_printf("Lowercase hex: %x\n", num);
-    ft_printf("Uppercase hex: %X\n", num);
-    ft_printf("Another number: %x\n", 255); // Example with small number
+    int ret_ft, ret_std;
+
+    printf("==== Testing ft_printf against printf ====\n\n");
+
+    // Test %c
+    printf("Test %%c:\n");
+    ret_std = printf("printf: [%c]\n", 'A');
+    ret_ft = ft_printf("ft_printf: [%c]\n", 'A');
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %s
+    printf("Test %%s:\n");
+    ret_std = printf("printf: [%s]\n", "Hello, world!");
+    ret_ft = ft_printf("ft_printf: [%s]\n", "Hello, world!");
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %p
+    printf("Test %%p:\n");
+    void *ptr = &ret_std;
+    ret_std = printf("printf: [%p]\n", ptr);
+    ret_ft = ft_printf("ft_printf: [%p]\n", ptr);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %d and %i
+    printf("Test %%d and %%i:\n");
+    ret_std = printf("printf: [%d] [%i]\n", INT_MIN, INT_MAX);
+    ret_ft = ft_printf("ft_printf: [%d] [%i]\n", INT_MIN, INT_MAX);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %u
+    printf("Test %%u:\n");
+    ret_std = printf("printf: [%u]\n", UINT_MAX);
+    ret_ft = ft_printf("ft_printf: [%u]\n", UINT_MAX);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %x and %X
+    printf("Test %%x and %%X:\n");
+    ret_std = printf("printf: [%x] [%X]\n", 255, 255);
+    ret_ft = ft_printf("ft_printf: [%x] [%X]\n", 255, 255);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %% (percent sign)
+    printf("Test %%%%:\n");
+    ret_std = printf("printf: [%%]\n");
+    ret_ft = ft_printf("ft_printf: [%%]\n");
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test %f
+    printf("Test %%f:\n");
+    ret_std = printf("printf: [%f]\n", 123.456789);
+    ret_ft = ft_printf("ft_printf: [%f]\n", 123.456789);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
+    // Test combinations
+    printf("Test combinations:\n");
+    ret_std = printf("printf: [%d] [%s] [%x] [%c] [%p] [%%]\n", 42, "test", 255, 'A', ptr);
+    ret_ft = ft_printf("ft_printf: [%d] [%s] [%x] [%c] [%p] [%%]\n", 42, "test", 255, 'A', ptr);
+    printf("Return values: printf = %d, ft_printf = %d\n\n", ret_std, ret_ft);
+
     return 0;
 }

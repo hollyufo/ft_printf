@@ -6,7 +6,7 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:15:15 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/16 16:24:57 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:36:16 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 # include <stdlib.h> 
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
 
-size_t	ft_strlen(const char *str);
 int		ft_printf(const char *format, ...);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_bzero(void *s, size_t n);
 void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putnbr_unsigned_fd(unsigned int n, int fd);
+void	ft_putptr_fd(void *ptr, int fd);
+void	ft_puthex_lower_fd(unsigned int n, int fd);
+void	ft_puthex_upper_fd(unsigned int n, int fd);
+void	ft_putfloat_fd(double n, int fd, int precision);
 # endif
