@@ -6,13 +6,13 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:32:45 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/23 13:33:14 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:07:48 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }

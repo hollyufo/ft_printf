@@ -6,13 +6,13 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:35:16 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/23 13:35:19 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:22:26 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_putnbr_unsigned_fd(unsigned int nb, int fd)
+void	ft_putnbr_unsigned_fd(unsigned int nb, int fd)
 {
 	if (nb >= 10)
 	{

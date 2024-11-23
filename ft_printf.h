@@ -6,11 +6,11 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:15:15 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/23 13:36:16 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:05:42 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef FT_PRINTF_H
+#ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include <stddef.h>
@@ -25,7 +25,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putnbr_unsigned_fd(unsigned int n, int fd);
 void	ft_putptr_fd(void *ptr, int fd);
-void	ft_puthex_lower_fd(unsigned int n, int fd);
-void	ft_puthex_upper_fd(unsigned int n, int fd);
+void	ft_puthex(unsigned int num, int fd, char case_type);
 void	ft_putfloat_fd(double n, int fd, int precision);
-# endif
+#endif
