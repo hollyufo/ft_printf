@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hollyufo <hollyufo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:15:15 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/24 17:29:24 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/11/25 21:35:20 by hollyufo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ void	ft_putstr_fd(char *s, int fd, int *count);
 void	ft_putnbr_fd(int n, int fd, int *count);
 void	ft_putnbr_unsigned_fd(unsigned int n, int fd, int *count);
 void	ft_putptr_fd(void *ptr, int fd, int *count);
-void    ft_puthex(unsigned long num, int fd, char case_type, int *count);
+void	ft_puthex(unsigned long num, int fd, char case_type, int *count);
 void	ft_putfloat_fd(double n, int fd, int precision, int *count);
 #endif
