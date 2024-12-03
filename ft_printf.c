@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hollyufo <hollyufo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:46:42 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/11/25 21:43:27 by hollyufo         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:09:38 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static	void	ft_handle_format(const char *form, va_list args, int fd, int *c)
 {
 	if (*form == 's')
 		ft_putstr_fd(va_arg(args, char *), fd, c);
-	else if (*form == 'd' || *form == 'i')
+	else if (*form == 'd')
+		ft_putnbr_fd(va_arg(args, int), fd, c);
+	else if (*form == 'i')
 		ft_putnbr_fd(va_arg(args, int), fd, c);
 	else if (*form == 'c')
 		ft_putchar_fd(va_arg(args, int), fd, c);
