@@ -19,7 +19,6 @@ void	ft_putptr_fd(void *ptr, int fd, int *count)
 	if (!ptr)
 	{
 		ft_putstr_fd("(nil)", fd, count);
-		(*count) = (*count) + 5;
 		return ;
 	}
 	address = (unsigned long)ptr;
