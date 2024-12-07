@@ -6,7 +6,7 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:46:42 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/12/07 16:46:20 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:58:31 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_printf(const char *format, ...)
 
 	va_start(args, format);
 	count = 0;
-	if(!format)
+	if (!format)
 	{
 		return (-1);
 	}
