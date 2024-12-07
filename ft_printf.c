@@ -6,7 +6,7 @@
 /*   By: imchaibi <imchaibi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:46:42 by imchaibi          #+#    #+#             */
-/*   Updated: 2024/12/03 14:10:07 by imchaibi         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:46:20 by imchaibi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static	void	ft_handle_format(const char *form, va_list args, int fd, int *c)
 		ft_putnbr_fd(va_arg(args, int), fd, c);
 	else if (*form == 'c')
 		ft_putchar_fd(va_arg(args, int), fd, c);
-	else if (*form == 'f')
-		ft_putfloat_fd(va_arg(args, double), fd, 6, c);
 	else if (*form == 'p')
 		ft_putptr_fd(va_arg(args, void *), fd, c);
 	else if (*form == 'u')
@@ -41,6 +39,10 @@ int	ft_printf(const char *format, ...)
 
 	va_start(args, format);
 	count = 0;
+	if(!format)
+	{
+		return (-1);
+	}
 	while (*format)
 	{
 		if (*format == '%')

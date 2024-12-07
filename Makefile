@@ -1,6 +1,6 @@
 NAME = libftprintf.a
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror 
 SRC = ft_printf.c ft_putchar_fd.c ft_putfloat_fd.c ft_puthex.c \
       ft_putnbr_fd.c ft_putnbr_unsigned_fd.c ft_putptr_fd.c ft_putstr_fd.c
 
